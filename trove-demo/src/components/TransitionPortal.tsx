@@ -8,9 +8,7 @@ interface Props {
   onComplete: () => void
 }
 
-const PARTICLE_COUNT = 28
-const SWIRL_COUNT = 5
-const BLOOM_COUNT = 3
+const PARTICLE_COUNT = 36
 const PORTAL_DURATION_MS = 3200
 const EASE_EXPO: [number, number, number, number] = [0.22, 1, 0.36, 1]
 
@@ -36,85 +34,60 @@ export default function TransitionPortal({ theme, onComplete }: Props) {
     >
       {Array.from({ length: PARTICLE_COUNT }).map((_, i) => {
         const angle = (i / PARTICLE_COUNT) * Math.PI * 2
-        const radius = maxDim * 0.5
+        const radius = maxDim * 0.55
         const startX = Math.cos(angle) * radius
         const startY = Math.sin(angle) * radius
-        const len = 25 + Math.random() * 50
+        const len = 40 + Math.random() * 80
+        const width = 1.5 + Math.random() * 1.5
         return (
           <motion.div
             key={`particle-${i}`}
-            className="absolute rounded-full"
+            className="absolute"
             style={{
-              width: 1.5,
+              width,
               height: len,
+              borderRadius: width,
               background: `linear-gradient(to bottom, ${t.transitionColors[i % t.transitionColors.length]}, transparent)`,
               transformOrigin: 'center',
               rotate: `${(angle * 180) / Math.PI + 90}deg`,
-              filter: `blur(${Math.random() > 0.5 ? 0.5 : 0}px)`,
             }}
             initial={{ x: startX, y: startY, opacity: 0, scale: 0 }}
             animate={{
-              x: [startX, 0, -startX * 0.3],
-              y: [startY, 0, -startY * 0.3],
-              opacity: [0, 0.9, 0],
-              scale: [0.3, 1.2, 0],
+              x: [startX, 0],
+              y: [startY, 0],
+              opacity: [0, 0.85, 0],
+              scale: [0.4, 1.3, 0.6],
             }}
             transition={{
-              duration: 1.6,
-              delay: 0.1 + Math.random() * 0.3,
+              duration: 1.8,
+              delay: 0.05 + Math.random() * 0.4,
               ease: EASE_EXPO,
+              opacity: { duration: 1.8, times: [0, 0.5, 1] },
             }}
           />
         )
       })}
 
-      {Array.from({ length: SWIRL_COUNT }).map((_, i) => (
-        <motion.div
-          key={`swirl-${i}`}
-          className="absolute rounded-full"
-          style={{
-            width: 200 + i * 80,
-            height: 200 + i * 80,
-            border: 'none',
-            borderTop: `1.5px solid ${t.transitionColors[0]}${Math.round((0.35 - i * 0.06) * 255).toString(16).padStart(2, '0')}`,
-            borderRight: `1px solid ${t.transitionColors[1]}${Math.round((0.15 - i * 0.02) * 255).toString(16).padStart(2, '0')}`,
-          }}
-          initial={{ scale: 0, opacity: 0, rotate: i * 30 }}
-          animate={{
-            scale: [0, 1, 2.5],
-            opacity: [0, 0.6, 0],
-            rotate: [i * 30, i * 30 + 200, i * 30 + 400],
-          }}
-          transition={{
-            duration: 2.4,
-            delay: i * 0.12,
-            ease: EASE_EXPO,
-          }}
-        />
-      ))}
-
-      {Array.from({ length: BLOOM_COUNT }).map((_, i) => (
-        <motion.div
-          key={`bloom-${i}`}
-          className="absolute rounded-full"
-          style={{
-            background: `radial-gradient(ellipse, ${t.transitionColors[i]}30 0%, ${t.transitionColors[i]}08 40%, transparent 70%)`,
-            filter: 'blur(8px)',
-          }}
-          initial={{ width: 20, height: 20, opacity: 0 }}
-          animate={{
-            width: [20, maxDim * 1.5],
-            height: [20, maxDim * 1.5],
-            opacity: [0, 0.8, 0],
-          }}
-          transition={{
-            duration: 2,
-            delay: 0.4 + i * 0.25,
-            ease: [0.16, 1, 0.3, 1],
-            opacity: { duration: 2, delay: 0.4 + i * 0.25, times: [0, 0.3, 1] },
-          }}
-        />
-      ))}
+      <motion.div
+        className="absolute rounded-full"
+        style={{
+          width: 180,
+          height: 180,
+          background: `radial-gradient(circle, ${t.transitionColors[0]}40 0%, ${t.transitionColors[1]}15 50%, transparent 70%)`,
+          filter: 'blur(30px)',
+        }}
+        initial={{ scale: 0, opacity: 0 }}
+        animate={{
+          scale: [0, 1.8, 2.5],
+          opacity: [0, 0.5, 0],
+        }}
+        transition={{
+          duration: 2.2,
+          delay: 0.8,
+          ease: [0.16, 1, 0.3, 1],
+          opacity: { duration: 2.2, delay: 0.8, times: [0, 0.4, 1] },
+        }}
+      />
 
       <motion.div
         className="absolute text-center z-10"
