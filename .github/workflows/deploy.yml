@@ -4,6 +4,10 @@ on:
   push:
     branches: [develop]
 
+defaults:
+  run:
+    working-directory: trove-demo
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -14,6 +18,7 @@ jobs:
         with:
           node-version: 20
           cache: npm
+          cache-dependency-path: trove-demo/package-lock.json
 
       - run: npm ci
 
@@ -22,4 +27,4 @@ jobs:
       - uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
+          publish_dir: trove-demo/dist
