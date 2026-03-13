@@ -1,0 +1,41 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
+
+@import "tailwindcss";
+
+body {
+  margin: 0;
+  background: #0a0a0f;
+  color: #e8e4ef;
+  font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
+}
+
+#root {
+  min-height: 100svh;
+}
+
+::selection {
+  background: rgba(200, 140, 255, 0.3);
+}
+
+.font-serif {
+  font-family: 'DM Serif Display', serif;
+}
+
+.font-hand {
+  font-family: 'Libre Baskerville', serif;
+  font-style: italic;
+}
+
+.text-primary { color: var(--text-primary); }
+.text-secondary { color: var(--text-secondary); }
+.text-muted { color: var(--text-muted); }
+.text-accent { color: var(--accent); }
+.bg-page { background: var(--bg); }
+.bg-card { background: var(--card-bg); }
+.border-card { border-color: var(--card-border); }
+.bg-chat { background: var(--chat-bg); }
+.bg-artifact { background: var(--artifact-bg); }
+.bg-surface-subtle { background: var(--surface-subtle); }
+.bg-surface-faint { background: var(--surface-faint); }
+.border-subtle { border-color: var(--border-subtle); }
